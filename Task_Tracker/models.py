@@ -18,6 +18,8 @@ class Task(models.Model):
     status = models.CharField(choices = STATUS_CHOICES, max_length = 20, default = 'todo', verbose_name = 'Task Status')
     priority = models.CharField(choices = PRIORITY_CHOICES, max_length = 20, default = 'medium', verbose_name = 'Task Status')
     author = models.ForeignKey(User, on_delete = models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
 
 
     def __str__(self):
@@ -28,3 +30,4 @@ class Coment(models.Model):
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     task = models.ForeignKey(Task, on_delete = models.CASCADE)
     media = models.FileField(upload_to= 'media_coments', null = True, blank = True)
+    created_at = models.DateTimeField(auto_now_add = True)
