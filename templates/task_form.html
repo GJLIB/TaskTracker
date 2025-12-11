@@ -2,7 +2,8 @@
 
  {% block  content%}
     <h1>Створити нове завдання</h1>
-    <form action = '' method = 'post'
+    <form action = '' method = 'post'>
+        {% csrf_token %}
     {{ form.as_p}}
     <button type = 'submit' class = 'btn-primary'>Створити</button>
 </form>

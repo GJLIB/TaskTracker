@@ -3,18 +3,21 @@ from django.urls import reverse_lazy
 from django.views.generic import*
 from .models import Task
 from .forms import*
-class TaskListView(ListView):
+from django.contrib.auth.mixins import LoginRequiredMixin
+class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'task_list.html'
     context_object_name = 'task_list'
-    ordering = ['-created_at'] # Сортування за датою публікації (від нових до старих)
+    ordering = ['-created_at']
+    def get_queryset(self):
+        return Task.objects.filter(author=self.request.user) # Сортування за датою публікації (від нових до старих)
 
-class TaskDetailView(DetailView):
+class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'task_detail.html'
     content_object_name = 'task'
 
-class TaskCreateView(CreateView):
+class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = 'task_form.html'
@@ -25,8 +28,13 @@ class TaskCreateView(CreateView):
          form.save()
          return super().form_valid(form)
     
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model  = Task
     form_class = TaskForm
-    template_name = 'task_form.html'
-    succes_url = reverse_lazy('home')
+    template_name = 'task_update.html'
+    success_url = reverse_lazy('home')
+
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
+    model = Task
+    template_name = 'task_delete.html'
+    success_url = reverse_lazy('home')

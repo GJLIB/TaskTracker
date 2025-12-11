@@ -4,3 +4,6 @@
 <h1>Задача: {{task.title}}</h1>
 <p><strong>Опис:</strong>{{task.description}}</p>
 <p><strong>Статус:</strong>{{task.status}}</p>
+<a href = '{% url 'task_update' task.id%}'  class = 'btn btn-warning'>Редагувати</a>
+<a href = '{% url 'task_delete' task.id%}'  class = 'btn btn-danger'>Видалити</a>
+{% endblock  %}
