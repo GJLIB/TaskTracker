@@ -9,7 +9,7 @@ def register_page(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("room-list")
+            return redirect("home")
     context = {"form": form}
     return render(request, template_name="register.html", context=context)
 
@@ -20,7 +20,7 @@ def login_page(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect("room-list")
+            return redirect("home")
     context = {"form": form}
     return render(request, template_name="login.html", context=context)
 

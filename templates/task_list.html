@@ -1,13 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
 <a href = "{% url 'task_create' %}" class = "btn btn-success mb-3">Створити завдання</a>
+<form action="" method="get" class="d-flex gap-2 my-3" >
+    <select class="form-select" aria-label="Default select example" name='status'>
+        <option value = ''>Виберіть статус</option>
+        <option value="todo">Потрібно зробити</option>
+        <option value="in_progress">В процесі</option>
+        <option value="completed">Зроблено</option>
+      </select>
+    <button type="submit" class="btn btn-outline-secondary">Фільтрувати</button>
+    
+</form>
 <div class="list-group">
     {% for task in task_list %}
     <a href="{% url 'task_detail' task.id%}" class="list-group-item list-group-item-action">
         <span class="badge rounded-pill text-bg-primary">{{task.status}}</span>
-        <span class = "text-primary ms-5">{{task.deadline}}</span>
-        {{task.title}}></a>
-    <h2>{{ task.title }}</h2>
+        
+        {{task.title}}>
+        <span class = "text-primary ms-5">{{task.deadline}}</span></a>
     {% endfor %}
 </div>
 {% endblock content %}
